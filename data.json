@@ -1,0 +1,10 @@
+{
+  "App": {
+    "app_id": "MzgwMDkwNTc2OTYw",
+    "app_secret": "IAFB6IBoge2uFJNQ71Jwp39-Sl9-UmK9"
+  },
+  "location": { "leftTop": [0, 90], "rightBottom": [180, 0] },
+  "bj": { "leftTop": [116.521102,39.907775], "rightBottom": [116.527929,39.903804] },
+  "ds": { "leftTop": [113.947247,22.541527], "rightBottom": [113.949358,22.540146]},
+  "location2": { "leftTop": [116.51308564518336,39.89901474863562], "rightBottom": [116.51288564518336,39.89921474863562] }
+}

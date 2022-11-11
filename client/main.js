@@ -1,0 +1,63 @@
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+import store from './store'
+import { toast } from '@seatalk/web-app-sdk'
+
+Vue.config.productionTip = false
+
+const port = location.protocol === 'https:' ? '' : ':8082'
+const protocol = location.protocol === 'https:' ? 'wss' : 'ws'
+const path = process.env.NODE_ENV === 'development' ? '' : '/wss'
+
+const socket = new WebSocket(`${protocol}://${location.hostname}${port}${path}`)
+
+function onmessage (callback) {
+  socket.addEventListener('message', function (event) {
+    // console.log('Message from server ', event.data)
+    const json = JSON.parse(event.data)
+    callback(json)
+  })
+}
+
+function removemessage (callback) {
+  socket.removeEventListener('message', callback)
+}
+function send (json) {
+  socket.send(JSON.stringify(json))
+}
+
+function onClose () {
+  // window.alert('连接错误, 按确认重连或联系管理员')
+  toast({message: '连接错误, 按确认重连或联系管理员'})
+  // window.location.reload()
+}
+// Connection opened
+socket.addEventListener('open', function (event) {
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    components: { App },
+    template: '<App/>',
+  })
+})
+
+// Listen for messages
+socket.addEventListener('error', function (event) {
+  console.log('Message from server ', event)
+  // onClose()
+})
+
+// Listen for messages
+socket.addEventListener('close', function (event) {
+  console.log('Message from server ', event)
+  onClose()
+})
+
+Vue.prototype.$onmessage = onmessage
+Vue.prototype.$send = send
+Vue.prototype.$removemessage = removemessage

@@ -1,0 +1,77 @@
+.deck {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  -moz-transform: translate3d(-50%, -50%, 0);
+  -o-transform: translate3d(-50%, -50%, 0);
+  -ms-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+  /* transform-style: preserve-3d; */
+}
+
+.card {
+  position: absolute;
+  left: -2.5rem;
+  top: -3.5rem;
+  width: 5rem;
+  height: 7rem;
+  /* transform-style: preserve-3d; */
+}
+
+.card .wrap {
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.card .face {
+  height: 100%;
+  width: 100%;
+  background-image: url(./backface.png);
+  background-size: 100% 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Chrome 和 Safari */
+}
+
+.card.box-shadow {
+  box-shadow: 3px 2px 2px 1px #810000, 1px 0px 3px rgb(0 0 0 / 50%);
+}
+
+.card .back {
+  transform: rotateY(180deg);
+  height: 100%;
+  width: 100%;
+  background-image: url(./winface.png);
+  background-size: 100% 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Chrome 和 Safari */
+}
+.card .back .name {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 20px;
+  padding: 0 14px;
+  color: black;
+  padding: 0 12px;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+}
+
+.card .back .avatar {
+  margin-top: 7px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+@media screen and (min-width: 414px) and (min-height: 736px) {
+  .card .back .name {
+    font-size: 14px;
+  }
+}
