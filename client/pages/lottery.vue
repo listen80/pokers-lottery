@@ -234,10 +234,10 @@ export default {
       div.textContent = data[1]
       el.appendChild(div)
 
-      const image = new Image()
-      image.src = data[2]
-      image.classList.add('avatar')
-      el.appendChild(image)
+      // const image = new Image()
+      // image.src = data[2]
+      // image.classList.add('avatar')
+      // el.appendChild(image)
     },
     handleShowPrizes () {
       this.visiablePrizes = true

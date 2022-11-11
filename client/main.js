@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-import { toast } from '@seatalk/web-app-sdk'
 
 Vue.config.productionTip = false
 
@@ -31,7 +30,7 @@ function send (json) {
 
 function onClose () {
   // window.alert('连接错误, 按确认重连或联系管理员')
-  toast({message: '连接错误, 按确认重连或联系管理员'})
+  console.log({message: '连接错误, 按确认重连或联系管理员'})
   // window.location.reload()
 }
 // Connection opened

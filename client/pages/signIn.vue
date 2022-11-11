@@ -7,7 +7,7 @@
     <div class="expect">
       <template v-if="loading">
         <Button :buttonStyle="buttonStyle">
-          <img :src="loading" alt="" class="loading" />
+          <img :src="loadingImage" alt="" class="loading" />
         </Button>
       </template>
       <template v-else>
@@ -25,9 +25,8 @@
 
 import Button from '../components/Button.vue'
 import { mapState } from 'vuex'
-import { toast } from '@seatalk/web-app-sdk'
 const signInface = require('@assets/deck/signInface.png')
-const loading = require('@assets/loading.png')
+const loadingImage = require('@assets/loading.png')
 
 export default {
   name: 'signIn',
@@ -45,7 +44,7 @@ export default {
   },
   beforeCreate () {
     this['signInface'] = signInface
-    this['loading'] = loading
+    this['loadingImage'] = loadingImage
   },
   created () {
     this.$onmessage(this.handle)
@@ -65,32 +64,34 @@ export default {
         this.loading = false
       }
     },
-    postSignIn () {
-      // 用户信息 位置信息
-      this.loading = true
-      // this.$send({
-      //   type: 'postSignIn',
-      //   data: { user: this.me, isAdmin: true },
-      // })
+    getLocation () {
       navigator.geolocation.getCurrentPosition(
         position => {
           if (position) {
-            const { coords } = position
-            const { latitude, longitude } = coords
+            console.log(position)
             this.$send({
               type: 'postSignIn',
-              data: { coords: { latitude, longitude }, user: this.me },
+              data: { position, user: this.me },
             })
           } else {
-            toast({ message: '定位失败' })
+            console.log({ message: '定位失败' })
             this.loading = false
           }
         },
         () => {
-          toast({ message: '没有权限，定位失败' })
+          console.log({ message: '没有权限，定位失败' })
           this.loading = false
         }
       )
+    },
+    postSignIn () {
+      // 用户信息 位置信息
+      this.loading = true
+      // this.getLocation()
+      this.$send({
+        type: 'postSignIn',
+        data: { user: this.me, isAdmin: true },
+      })
     },
   },
 }

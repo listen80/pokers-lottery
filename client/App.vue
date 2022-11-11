@@ -13,8 +13,6 @@ import Back from './components/Back.vue'
 import Footer from './components/Footer.vue'
 import { mapState, mapMutations } from 'vuex'
 
-import { getSSOToken, clientInfo, toast } from '@seatalk/web-app-sdk'
-
 const key = 'userInfo'
 let userInfo = null
 
@@ -32,17 +30,11 @@ export default {
     this.$send({ type: 'getStep' })
     this.$send({ type: 'getLottery' })
     this.$send({ type: 'getPrizes' })
-    if (clientInfo.appVersion === '0.0.0') {
-      return
-    }
+
     if (userInfo) {
       this.setMe(userInfo)
     } else {
-      getSSOToken({
-        onSuccess: (token) => {
-          this.$send({ type: 'getUserInfo', data: token })
-        },
-      })
+      this.$send({ type: 'getUserInfo', data: '' })
     }
   },
   beforeDestroy () {
@@ -58,7 +50,7 @@ export default {
     ...mapMutations(['setLottery', 'setPrizes', 'setMe']),
     handle ({ type, data, msg, error }) {
       if (type === 'msg') {
-        toast({ message: msg })
+        console.log({ message: msg })
       } else if (type === 'getStep') {
         this.step = data
         const { path } = this.$route
